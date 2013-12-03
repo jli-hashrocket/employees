@@ -1,5 +1,7 @@
 class Employee
 
+  attr_reader :employee_data, :sales_data, :sales_total
+
   def initialize(sales_data, employee_data, sales_total = 0)
     @employee_data = employee_data
     @sales_data = sales_data
