@@ -1,0 +1,72 @@
+As a payroll manager
+I want to know if the business has hit their monthly quota
+So that I can know if the owner gets a bonus
+
+As a payroll manager
+I want to know if each quota based salesperson has hit their quota
+So that I can calculate their bonus
+
+As a payroll manager
+I want to know the sales amount of each commission based sales person
+So that I can calculate their commission based on their sales
+
+As a payroll manager
+
+I want to calculate each employees total net before taxes (base pay + commision)
+So that I can calculate their final pay check amount
+
+As a payroll manager
+I want to calculate their commission/bonus
+So that I can calculate their total paycheck amount
+
+
+Employee(parent)
+salary + tax
+returns list of employees
+
+Owner
+salary + tax
+bonus($1000) if monthly quota is hit
+
+
+CommissionSalesPerson(child)
+commissionpercentage + tax
+gross salary + tax
+
+QuotaSalesPerson(child)
+bonus + tax
+gross salary + tax
+quota
+
+Sale
+returns list of sales
+
+Company
+monthlyquota(250000)
+
+Tax
+total * 30% = net pay
+
+
+class Employee
+  def sales
+    Sales.for(last_name)
+  end
+
+  def net_pay_before_tax
+    base_pay + sales_bonus
+  end
+
+  def net_pay
+    net_pay_before_tax * 0.7
+  end
+end
+
+class CommissionSalesPerson < Employee
+  def net_pay_before_tax
+    super + commission
+  end
+end
+
+class QuotaSalesPerson < Employee
+end
