@@ -18,10 +18,8 @@ class Employee
   def net_pay_before_tax
     @employee_data.each do |employee|
       @sales_data.each do |sale|
-        if sale["last_name"] == employee["last_name"] && employee["quota"].to_f >= sale["gross_sale_value"].to_f
-          employee["pay_before_tax"] = employee['base_pay'].to_f + employee['bonus'].to_f
-        elsif sale["last_name"] == employee["last_name"] && employee["quota"].to_f < sale["gross_sale_value"].to_f
-          employee["base_pay"]
+        if sale["last_name"] == employee["last_name"]
+          employee["pay_before_tax"] = employee['base_pay'].to_f
         end
       end
     end
