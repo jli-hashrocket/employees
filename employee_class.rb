@@ -2,17 +2,10 @@ class Employee
 
   attr_reader :employee_data, :sales_data, :sales_total
 
-  def initialize(sales_data, employee_data, sales_total = 0)
+  def initialize(sales_data, employee_data)
     @employee_data = employee_data
-    @sales_data = sales_data
-    @sales_total = sales_total
-  end
-
-  def sales
-    @sales_data.each do |sale|
-      @sales_total += sale["gross_sale_value"].to_f
-    end
-    @sales_total = @sales_total.round(2)
+    @sales_data = sales_data.all_sales
+    @sales_total = sales_data.sales_total
   end
 
   def net_pay_before_tax
