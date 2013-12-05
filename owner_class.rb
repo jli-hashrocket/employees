@@ -1,23 +1,24 @@
 class Owner < Employee
-  def net_pay_before_tax
+  attr_reader :quota
+
+  def initialize(data)
+    super(data)
+    @bonus = data["bonus"]
+    @quota = data["quota"]
+    @base_pay = data["base_pay"]
+    @sales = Sale.all_sales
+    @sales_total = 0
+    @sales.each do |sale|
+        @sales_total += sale['gross_sale_value'].to_f
+    end
+  end
+
+  def net_pay_after_tax
     if @sales_total > 250000
-      @employee_data.each do |employee|
-        @sales_data.each do |sale|
-          if employee["position"] == 'owner'
-            employee["pay_before_tax"] = employee['base_pay'].to_f + employee['bonus'].to_f
-          end
-        end
-      end
+      @base_pay.to_f/12 + (@bonus.to_f * 0.7)
+    else
+      @base_pay.to_f/12
     end
   end
-
-  def net_pay
-    @employee_data.each do |employee|
-      employee["pay_after_tax"] = employee["pay_before_tax"].to_f - (employee["pay_before_tax"].to_f * 0.30) if employee["position"] == 'owner'
-      # employee["pay_after_tax"] =  employee["base_pay"].to_f - (employee["base_pay"].to_f * 0.30 ) if employee["position"] != 'quota sales'
-    end
-            binding.pry
-
-  end
-
 end
+

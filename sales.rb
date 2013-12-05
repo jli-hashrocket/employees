@@ -1,15 +1,28 @@
-class Sales
-  attr_reader :all_sales, :sales_total
+class Sale
+  attr_reader :data, :gross_sales_value, :last_name
+  @@all_sales = []
 
-  def initialize(all_sales, sales_total = 0)
-    @all_sales = all_sales
-    @sales_total = sales_total
+  def initialize(data)
+    @gross_sales_value = data["gross_sale_value"]
+    @last_name = data["last_name"]
+  end
+
+  def self.load_sales
+    monthly_sales = 'monthly_sales.csv'
+    CSV.foreach(monthly_sales, headers:true) do |row|
+      data = row.to_hash
+        @@all_sales << data
+    end
+  end
+
+  def self.all_sales
+    @@all_sales
   end
 
   def sales
-    @all_sales.each do |sale|
+    @@all_sales.each do |sale|
+      sale["last_name"] ==
       @sales_total += sale["gross_sale_value"].to_f
-      puts "Last Name:#{sale["last_name"]} Sale:#{sale['gross_sale_value']}"
     end
     @sales_total = @sales_total.round(2)
   end
